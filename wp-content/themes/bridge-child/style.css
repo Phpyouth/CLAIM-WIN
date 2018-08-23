@@ -1,0 +1,21 @@
+/*
+Theme Name: Bridge Child
+Theme URI: http://demo.qodeinteractive.com/bridge/
+Description: A child theme of Bridge Theme
+Author: Qode Interactive
+Author URI: http://www.qodethemes.com/
+Version: 1.0.0
+Template: bridge
+*/
+@import url("../bridge/style.css");
+
+.content_inner > #primary { margin-top:150px; }
+
+h2#error_message {
+    color: red;
+    font-size: 30px;
+}
+h2#success_message {
+    color: #99b63b;
+    font-size: 30px;
+}
