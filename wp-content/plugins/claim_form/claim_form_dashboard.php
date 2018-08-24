@@ -70,7 +70,7 @@
 			echo '<td>'.$cancel_reason.'</td>';
 			echo '<td>'.$claim['reminder_date'].'</td>';
 			echo '<td>'.$claim['airline_ref'].'</td>';
-			echo '<td>'.$claim['time_claim_sub'].'</td>';
+			echo '<td>'.date('m/d/Y H:i:s', $claim['submit_time']).'</td>';
 			echo '<td>'.$claim['time_reply_airline'].'</td>';
 			echo '<td>'.$claim['internal_notes'].'</td>';
 			
