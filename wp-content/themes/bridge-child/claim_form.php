@@ -1,7 +1,7 @@
 <?php 
 /*
 Template Name: Claim Form
-*/ 
+*/
 if($_POST['claim_submit']){
 	extract($_POST);
 	$con = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
@@ -20,9 +20,11 @@ if($_POST['claim_submit']){
 		
 		wp_mail($user_email, $title, $message);
 		
-		$submit_claim = mysqli_query($con,"INSERT INTO `_cu_claim_form` (`forwhat_claim`, `flight_num`, `flight_date`, `dept_airport`, `arriv_airport`, `airline`, `claimimg_pessangers`, `booking_ref`, `alt_flight`, `cancel_details_hotel`, `cancel_reason`, `reminder_date`, `airline_ref`, `time_claim_sub`, `time_reply_airline`, `internal_notes`, `user_id`, `status`) VALUES ('$forwhat_claim','$flight_num','$flight_date','$dept_airport','$arriv_airport','$airline','$claimimg_pessangers','$booking_ref','$alt_flight','$cancel_details_hotel','$cancel_reason','$reminder_date','$airline_ref','$time_claim_sub','$time_reply_airline','$internal_notes','".get_current_user_id()."','0')");
+		$submit_claim = mysqli_query($con,"INSERT INTO `_cu_claim_form` (`forwhat_claim`, `flight_num`, `flight_date`, `dept_airport`, `arriv_airport`, `airline`, `claimimg_pessangers`, `booking_ref`, `alt_flight`, `cancel_details_hotel`, `cancel_reason`, `reminder_date`, `submit_time`, `airline_ref`, `time_claim_sub`, `time_reply_airline`, `internal_notes`, `user_id`, `status`) VALUES ('$forwhat_claim','$flight_num','$flight_date','$dept_airport','$arriv_airport','$airline','$claimimg_pessangers','$booking_ref','$alt_flight','$cancel_details_hotel','$cancel_reason','$reminder_date','".time()."','$airline_ref','$time_claim_sub','$time_reply_airline','$internal_notes','".get_current_user_id()."','0')");
 		if($submit_claim){
-			$success_message = '<h2 id="success_message">form submitted successfully</h2>';
+			wp_redirect( get_site_url()."/your-profile/?status=success" );
+			exit;
+			//$success_message = '<h2 id="success_message">form submitted successfully</h2>';
 		}
 			
 	}
@@ -71,7 +73,9 @@ if($_POST['claim_submit']){
 				$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 			
 			$message = __('Hi '.$user_name.',') . "\r\n\r\n";
-			$message .= 'You have successfully registered with us \r\n\r\n user name -> '.$user_name.' \r\n\r\n password -> '.$random_password.'' . "\r\n\r\n";
+			$message .= __('You have successfully registered with us.') . "\r\n\r\n";
+			$message .= __('User Name -> '.$user_name1.'') . "\r\n\r\n";
+			$message .= __('Password -> '.$random_password.'') . "\r\n\r\n";
 			$message .= __('Your claim request has been submitted successfully.') . "\r\n\r\n";
 			$message .= __("If you didn't make this request, you can ignore this email") . "\r\n\r\n";
 			$message .= __('Thanks,') . "\r\n";
@@ -82,9 +86,13 @@ if($_POST['claim_submit']){
 			
 			wp_mail($user_email, $title, $message);
 			
-			$submit_claim = mysqli_query($con,"INSERT INTO `_cu_claim_form` (`forwhat_claim`, `flight_num`, `flight_date`, `dept_airport`, `arriv_airport`, `airline`, `claimimg_pessangers`, `booking_ref`, `alt_flight`, `cancel_details_hotel`, `cancel_reason`, `reminder_date`, `airline_ref`, `time_claim_sub`, `time_reply_airline`, `internal_notes`, `user_id`, `status`) VALUES ('$forwhat_claim','$flight_num','$flight_date','$dept_airport','$arriv_airport','$airline','$claimimg_pessangers','$booking_ref','$alt_flight','$cancel_details_hotel','$cancel_reason','$reminder_date','$airline_ref','$time_claim_sub','$time_reply_airline','$internal_notes','$user_id','0')");
+			$submit_claim = mysqli_query($con,"INSERT INTO `_cu_claim_form` (`forwhat_claim`, `flight_num`, `flight_date`, `dept_airport`, `arriv_airport`, `airline`, `claimimg_pessangers`, `booking_ref`, `alt_flight`, `cancel_details_hotel`, `cancel_reason`, `reminder_date`, `submit_time`, `airline_ref`, `time_claim_sub`, `time_reply_airline`, `internal_notes`, `user_id`, `status`) VALUES ('$forwhat_claim','$flight_num','$flight_date','$dept_airport','$arriv_airport','$airline','$claimimg_pessangers','$booking_ref','$alt_flight','$cancel_details_hotel','$cancel_reason','$reminder_date','".time()."','$airline_ref','$time_claim_sub','$time_reply_airline','$internal_notes','$user_id','0')");
 			if($submit_claim){
-				$success_message = '<h2 id="success_message">form submitted successfully</h2>';
+				wp_redirect( get_site_url()."/your-profile/?status=success" );
+				exit;
+				//$_SESSION['success_message'] = '<h2 id="success_message">form submitted successfully</h2>';
+				//header("Refresh:0");
+				//$success_message = '<h2 id="success_message">form submitted successfully</h2>';
 			}
 
 		}
@@ -98,7 +106,12 @@ if($_POST['claim_submit']){
  
 <div id="primary" class="content-area grid_section">
     <main id="main" class="site-main section_inner" role="main">
-		<?php echo $success_message; ?>
+		<?php 
+		echo $success_message; 
+		/*if($_GET['status']=="success"){
+			echo '<h2 id="success_message">form submitted successfully</h2>';
+		}*/
+		?>
 		<form method="post" id="claim_form">
 			<?php
 			if(is_user_logged_in()){}
