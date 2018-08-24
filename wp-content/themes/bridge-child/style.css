@@ -19,3 +19,23 @@ h2#success_message {
     color: #99b63b;
     font-size: 30px;
 }
+div#claim_form_table_holder {
+    overflow-x: auto;
+}
+table#claim_form_table th, table#claim_form_table td {
+    border: 2px solid #99b63b;
+    max-height: 150px !important;
+}
+#claim_form_table thead {
+    background: #124479;
+    color: #fff;
+}
+div#claim_request_title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+span.show_more {
+    color: #99b63b;
+}
